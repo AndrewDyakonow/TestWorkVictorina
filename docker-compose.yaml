@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  db:
+    image:
+      postgres:latest
+    container_name: db_for_Bewiseai
+    ports:
+      - '5454:5432'
+    env_file:
+      - db/connect_db.env
