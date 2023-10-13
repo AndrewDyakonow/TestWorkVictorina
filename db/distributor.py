@@ -14,7 +14,7 @@ class Distributor:
         mapper_registry.metadata.create_all(settings.create_engine, checkfirst=True)
 
     @staticmethod
-    def add_data(data: list[ForDB], count_question: int) -> tuple[bool, list[VictorinaModel] | None]:
+    def add_data(data: list[ForDB], count_question: str) -> tuple[bool, list[VictorinaModel] | None]:
         """Добавить данные в БД"""
 
         last_re = Distributor.get_data()

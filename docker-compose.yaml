@@ -4,7 +4,34 @@ services:
     image:
       postgres:latest
     container_name: db_for_Bewiseai
+    networks:
+      - myNet
     ports:
       - '5454:5432'
+    volumes:
+      - ./db/postgres:/var/lib/postgresql/data
     env_file:
       - db/db_settings.env
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "db_for_Bewiseai", "-U", "itsme" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  app:
+    build:
+      context: .
+    container_name: app
+    volumes:
+      - ./:/TestForBewiseai/
+    networks:
+      - myNet
+    ports:
+      - '8800:8000'
+    depends_on:
+      db:
+        condition: service_healthy
+
+networks:
+  myNet:
+    driver: bridge

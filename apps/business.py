@@ -28,7 +28,7 @@ class BusinessLogic:
             db_request = Distributor()
             condition, last_request = db_request.add_data(result, self.body)
 
-            if count_requests >= 5:
+            if count_requests >= 10:
                 condition = False
                 return 'К сожалению новых вопросов не осталось, попробуйте уменьшить количество вопросов в запросе'
         return last_request
