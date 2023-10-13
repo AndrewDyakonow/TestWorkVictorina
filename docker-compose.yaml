@@ -7,4 +7,4 @@ services:
     ports:
       - '5454:5432'
     env_file:
-      - db/connect_db.env
+      - db/db_settings.env

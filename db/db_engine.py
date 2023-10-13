@@ -1,5 +1,7 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Engine
+
+from settings import PATH_DB_SETTINGS
 
 
 class Settings(BaseSettings):
@@ -12,15 +14,16 @@ class Settings(BaseSettings):
     DB_PORT: int
 
     @property
-    def create_engine(self):
+    def create_engine(self) -> Engine:
         engine = create_engine(
             f"postgresql+psycopg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.DB_HOST}"
             f":{self.DB_PORT}/{self.POSTGRES_DB}",
-            echo=True,
+            echo=False,
         )
+
         return engine
 
-    model_config = SettingsConfigDict(env_file='connect_db.env')
+    model_config = SettingsConfigDict(env_file=PATH_DB_SETTINGS)
 
 
 settings = Settings()

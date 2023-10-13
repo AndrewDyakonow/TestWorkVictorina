@@ -1,8 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
+
+from apps.business import BusinessLogic
 
 app = FastAPI()
 
 
-@app.get('/')
-async def hello():
-    return 'Hello Worlds'
+@app.post('/')
+def hello(data=Body()):
+    """Эндпоинт"""
+    body = data['questions_num']
+    processing = BusinessLogic(body)
+    result = processing.insert_data()
+    return result
